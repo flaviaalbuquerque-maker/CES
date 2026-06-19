@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CES — Maio 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── Tokens ── */
+:root{
+  --bg:#F7F6F2;
+  --card:#FFFFFF;
+  --border:#E4E2DB;
+  --border-light:#EDEBE5;
+  --radius:14px;
+  --radius-sm:9px;
+  --sh:0 1px 3px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.05);
+  --sh-md:0 2px 8px rgba(0,0,0,.07),0 8px 24px rgba(0,0,0,.06);
+  --text:#1C1B18;
+  --text2:#4A4843;
+  --text3:#8A8780;
+  --text4:#B8B5AE;
+
+  --g-text:#27500A; --g-bg:#EAF3DE; --g-bdr:#C0DD97; --g-bar:#639922;
+  --y-text:#7A5200; --y-bg:#FFF8D6; --y-bdr:#FFD83D; --y-bar:#F5BC00;
+  --r-text:#791F1F; --r-bg:#FCEBEB; --r-bdr:#F7C1C1; --r-bar:#A32D2D;
+
+  --hm5:#27500A; --hm4:#639922; --hm3:#F5BC00; --hm2:#E07020; --hm1:#A32D2D;
+  --hm-empty:#EFEDE7;
+
+  --font:'DM Sans',sans-serif;
+}
+
+/* ── Base ── */
+html{font-family:var(--font);background:var(--bg);color:var(--text);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+/* ── Shell ── */
+.shell{max-width:1160px;margin:0 auto;padding:36px 24px 72px}
+
+/* ── Top bar ── */
+.topbar{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:20px;margin-bottom:28px;flex-wrap:wrap;
+}
+.topbar-left{}
+.top-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:7px;display:flex;align-items:center;gap:7px;
+}
+.top-eyebrow .ne-badge{
+  background:var(--text);color:#fff;font-size:10px;font-weight:800;
+  letter-spacing:.04em;padding:2px 8px;border-radius:5px;
+}
+.top-title{font-size:28px;font-weight:800;letter-spacing:-.025em;color:var(--text);line-height:1.1}
+.top-sub{font-size:13px;color:var(--text3);margin-top:5px}
+
+/* month selector */
+.month-sel-wrap{
+  display:flex;align-items:center;gap:9px;
+  background:var(--card);border:1.5px solid var(--border);border-radius:99px;
+  padding:9px 16px 9px 13px;box-shadow:var(--sh);cursor:pointer;
+  flex-shrink:0;margin-top:4px;
+}
+.month-sel-wrap .ti{font-size:15px;color:var(--text3)}
+select#monthSel{
+  font-family:var(--font);font-size:13px;font-weight:700;color:var(--text);
+  border:none;outline:none;background:transparent;cursor:pointer;
+  appearance:none;-webkit-appearance:none;padding-right:2px;
+}
+
+/* ── Banner ── */
+.banner{
+  background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
+  padding:13px 18px;margin-bottom:30px;
+  display:flex;align-items:flex-start;gap:11px;box-shadow:var(--sh);
+}
+.banner .ti{font-size:17px;color:var(--text3);flex-shrink:0;margin-top:2px}
+.banner p{font-size:12.5px;color:var(--text2);line-height:1.7}
+.banner strong{color:var(--text);font-weight:600}
+.src-pill{
+  display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;
+  padding:1px 8px;border-radius:99px;vertical-align:middle;
+}
+.sp-form{background:#E4EEFF;color:#1A3E80}
+.sp-trable{background:#E0F5E0;color:#155A15}
+
+/* ── Section header ── */
+.sec-hdr{display:flex;align-items:center;gap:12px;margin:32px 0 16px}
+.sec-hdr-label{
+  font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text3);white-space:nowrap;
+}
+.sec-hdr-line{flex:1;height:1px;background:var(--border-light)}
+
+/* ── Hero grid ── */
+.hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:860px){.hero-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.hero-grid{grid-template-columns:1fr}}
+
+.hcard{
+  background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
+  padding:20px 20px 18px;box-shadow:var(--sh);position:relative;overflow:hidden;
+}
+/* accent line top */
+.hcard::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius) var(--radius) 0 0;
+}
+/* linha no topo: cor fixa só para total; form/trable/ces controlados pelo farol */
+.hcard.hc-total::before{background:#6A3FC8}
+
+.hcard-icon{font-size:19px;color:var(--text3);margin-bottom:11px}
+.hcard-val{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:4px}
+.hcard-label{font-size:12px;font-weight:600;color:var(--text2)}
+.hcard-sub{font-size:11.5px;color:var(--text3);margin-top:4px}
+.hcard-tag{
+  display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;
+  padding:3px 9px;border-radius:99px;border:1.5px solid;margin-top:10px;
+}
+.hcard-tag.g{color:var(--g-text);background:var(--g-bg);border-color:var(--g-bdr)}
+.hcard-tag.y{color:var(--y-text);background:var(--y-bg);border-color:var(--y-bdr)}
+.hcard-tag.r{color:var(--r-text);background:var(--r-bg);border-color:var(--r-bdr)}
+
+.hc-ces .hcard-val{color:var(--text)}   /* fallback, sobrescrito pelo farol */
+.hc-total .hcard-val{color:#3D1E80}
+/* todos os cards form/trable/ces: linha + valor seguem o farol */
+.hcard.farol-g::before{background:var(--g-bar)}
+.hcard.farol-g .hcard-val{color:var(--g-text)}
+.hcard.farol-y::before{background:var(--y-bar)}
+.hcard.farol-y .hcard-val{color:var(--y-text)}
+.hcard.farol-r::before{background:var(--r-bar)}
+.hcard.farol-r .hcard-val{color:var(--r-text)}
+
+/* ── Area grid ── */
+.area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:780px){.area-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.area-grid{grid-template-columns:1fr}}
+
+.acard{
+  background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
+  padding:18px 18px 16px;box-shadow:var(--sh);position:relative;transition:border-color .2s,background .2s;
+}
+/* farol coloring */
+.acard.farol-g{background:var(--g-bg);border-color:var(--g-bdr)}
+.acard.farol-y{background:var(--y-bg);border-color:var(--y-bdr)}
+.acard.farol-r{background:var(--r-bg);border-color:var(--r-bdr)}
+.acard.farol-g .acard-val{color:var(--g-text)}
+.acard.farol-y .acard-val{color:var(--y-text)}
+.acard.farol-r .acard-val{color:var(--r-text)}
+.acard.farol-g .acard-icon{color:var(--g-bar)}
+.acard.farol-y .acard-icon{color:var(--y-bar)}
+.acard.farol-r .acard-icon{color:var(--r-bar)}
+.acard.onb{border-width:2px}
+.acard.onb.farol-g{border-color:var(--g-bar)}
+.acard.onb.farol-y{border-color:var(--y-bar)}
+.acard.onb.farol-r{border-color:var(--r-bar)}
+.onb-tag{
+  position:absolute;top:13px;right:13px;font-size:9px;font-weight:800;
+  letter-spacing:.07em;text-transform:uppercase;
+  background:#F8EEB4;color:#7A5800;padding:2px 8px;border-radius:99px;
+}
+.acard-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.acard-icon{font-size:17px;color:var(--text3)}
+.acard-name{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text3)}
+.acard-val{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:8px}
+.farol-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11.5px;font-weight:600;padding:4px 10px;
+  border-radius:99px;border:1.5px solid;
+}
+.fb-g{color:var(--g-text);background:var(--g-bg);border-color:var(--g-bdr)}
+.fb-y{color:var(--y-text);background:var(--y-bg);border-color:var(--y-bdr)}
+.fb-r{color:var(--r-text);background:var(--r-bg);border-color:var(--r-bdr)}
+.acard-note{font-size:11px;color:var(--text3);margin-top:7px}
+
+/* ── Heatmap ── */
+.hm-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);box-shadow:var(--sh);overflow:hidden}
+.hm-scroll{overflow-x:auto}
+.hm-tbl{width:100%;border-collapse:separate;border-spacing:3px;min-width:620px;padding:14px}
+.hm-tbl th{
+  font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text3);padding:5px 10px;text-align:center;background:transparent;
+  white-space:nowrap;
+}
+.hm-tbl th.th-left{text-align:left}
+.hm-tbl td{padding:9px 11px;border-radius:7px;font-size:13px;font-weight:700;text-align:center;min-width:56px}
+.hm-tbl td.td-name{
+  text-align:left;background:var(--card);border:1.5px solid var(--border);
+  font-size:13px;font-weight:600;color:var(--text);min-width:160px;border-radius:8px;
+}
+.hm-tbl td.td-tier{background:transparent;text-align:center}
+.hm-tbl td.td-empty{background:var(--hm-empty);color:var(--text4);font-size:12px}
+.hm-tbl td.td-media{font-weight:800;border-radius:8px}
+/* heatmap note colors */
+.hm5{background:var(--hm5);color:#fff}
+.hm4{background:var(--hm4);color:#fff}
+.hm3{background:var(--hm3);color:var(--y-text)}
+.hm2{background:var(--hm2);color:#fff}
+.hm1{background:var(--hm1);color:#fff}
+
+/* col headers with subtitle */
+.th-main{display:block;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text2)}
+.th-sub{display:block;font-size:9px;font-weight:500;text-transform:none;letter-spacing:.01em;color:var(--text3);margin-top:1px}
+
+/* ── Tier chip ── */
+.tier{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.tier-Black{background:#1C1B18;color:#fff}
+.tier-Platinum{background:#5C6A78;color:#fff}
+.tier-Gold{background:#9A7010;color:#fff}
+
+/* ── Thermometer (horizontal) ── */
+.thermo-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px 24px 18px;box-shadow:var(--sh)}
+.thermo-rows{display:flex;flex-direction:column;gap:16px}
+.thermo-row{display:grid;grid-template-columns:90px 1fr;align-items:center;gap:14px}
+.thermo-row-label{text-align:right}
+.thermo-bar-h{height:32px;border-radius:8px;overflow:visible;display:flex;flex-direction:row;background:var(--border-light);border-radius:8px;position:relative}
+/* each segment is clickable/hoverable */
+.thermo-seg-h{
+  height:100%;transition:width .55s cubic-bezier(.34,1.56,.64,1);
+  position:relative;cursor:default;
+  display:flex;align-items:center;justify-content:center;
+  overflow:visible;
+}
+.thermo-seg-h:first-child{border-radius:8px 0 0 8px}
+.thermo-seg-h:last-child{border-radius:0 8px 8px 0}
+.thermo-seg-h:only-child{border-radius:8px}
+/* count badge inside segment */
+.seg-count{
+  font-size:12px;font-weight:800;color:#fff;
+  pointer-events:none;user-select:none;
+  text-shadow:0 1px 2px rgba(0,0,0,.25);
+  white-space:nowrap;
+}
+.ts-g .seg-count{color:#fff}
+.ts-y .seg-count{color:var(--y-text)}
+/* tooltip */
+.seg-tooltip{
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:#1C1B18;color:#fff;font-size:11px;font-weight:500;line-height:1.55;
+  padding:7px 11px;border-radius:8px;white-space:nowrap;
+  pointer-events:none;opacity:0;transition:opacity .15s;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:100;
+}
+.seg-tooltip::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:#1C1B18;
+}
+.thermo-seg-h:hover .seg-tooltip{opacity:1}
+.ts-g{background:var(--g-bar)}.ts-y{background:var(--y-bar)}.ts-r{background:var(--r-bar)}
+.thermo-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;padding-top:14px;border-top:1px solid var(--border-light)}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
+.leg-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+
+/* ── Feedbacks ── */
+.fb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:860px){.fb-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.fb-grid{grid-template-columns:1fr}}
+
+.fb-col-hdr{margin-bottom:12px}
+.fb-col-title-row{display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:2px solid}
+.fb-col-title-row.pos{border-color:var(--g-bar)}
+.fb-col-title-row.neu{border-color:var(--y-bar)}
+.fb-col-title-row.neg{border-color:var(--r-bar)}
+.fb-col-icon{font-size:16px}
+.fb-col-icon.pos{color:var(--g-bar)}
+.fb-col-icon.neu{color:var(--y-bar)}
+.fb-col-icon.neg{color:var(--r-bar)}
+.fb-col-name{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.fb-col-name.pos{color:var(--g-text)}
+.fb-col-name.neu{color:var(--y-text)}
+.fb-col-name.neg{color:var(--r-text)}
+.fb-col-ct{
+  margin-left:auto;font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px;
+}
+.fb-col-ct.pos{background:var(--g-bg);color:var(--g-text)}
+.fb-col-ct.neu{background:var(--y-bg);color:var(--y-text)}
+.fb-col-ct.neg{background:var(--r-bg);color:var(--r-text)}
+
+.fb-card{
+  background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
+  padding:13px 15px 11px;margin-bottom:10px;box-shadow:var(--sh);cursor:pointer;
+  transition:box-shadow .14s,transform .1s;
+}
+.fb-card:hover{box-shadow:var(--sh-md);transform:translateY(-1px)}
+.fb-card.pos{border-left:3.5px solid var(--g-bar)}
+.fb-card.neu{border-left:3.5px solid var(--y-bar)}
+.fb-card.neg{border-left:3.5px solid var(--r-bar)}
+.fb-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px}
+.fb-name{font-size:13px;font-weight:700}
+.fb-score{font-size:11px;font-weight:800;padding:1px 7px;border-radius:99px}
+.fb-score.pos{background:var(--g-bg);color:var(--g-text)}
+.fb-score.neu{background:var(--y-bg);color:var(--y-text)}
+.fb-score.neg{background:var(--r-bg);color:var(--r-text)}
+.fb-preview{font-size:12px;color:var(--text3);line-height:1.5}
+.fb-full{font-size:13px;color:var(--text2);line-height:1.65;display:none;margin-top:9px;padding-top:9px;border-top:1px solid var(--border-light)}
+.fb-full.open{display:block}
+.fb-toggle{font-size:11px;color:var(--text3);margin-top:6px;display:flex;align-items:center;gap:4px}
+.fb-toggle .ti{font-size:13px}
+
+.empty-col{text-align:center;padding:24px 0;color:var(--text3);font-size:13px}
+.empty-col .ti{font-size:26px;display:block;margin-bottom:6px;opacity:.35}
+
+/* ── Abas ── */
+.tab-bar{display:flex;gap:4px;margin-bottom:28px;border-bottom:2px solid var(--border)}
+.tab-btn{
+  font-family:var(--font);font-size:13px;font-weight:600;color:var(--text3);
+  background:none;border:none;padding:10px 18px 11px;cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:6px 6px 0 0;
+  transition:color .15s,border-color .15s,background .15s;
+}
+.tab-btn:hover{color:var(--text2);background:var(--border-light)}
+.tab-btn.active{color:var(--text);font-weight:700;border-bottom-color:var(--text)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── Executiva ── */
+.exec-grid-top{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:780px){.exec-grid-top{grid-template-columns:1fr}}
+.exec-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px 20px 16px;box-shadow:var(--sh)}
+.exec-card-title{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--text2);margin-bottom:4px;display:flex;align-items:center;gap:7px}
+.exec-card-title .ti{font-size:15px;color:var(--text3)}
+.exec-card-sub{font-size:11px;color:var(--text3);margin-bottom:14px}
+.exec-canvas-wrap{position:relative;height:260px}
+.exec-canvas-wrap-sm{position:relative;height:200px}
+/* donut central label */
+.donut-wrap{position:relative;height:260px;display:flex;align-items:center;justify-content:center}
+.donut-center{position:absolute;text-align:center;pointer-events:none}
+.donut-center-val{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.donut-center-lbl{font-size:11px;color:var(--text3);margin-top:2px}
+/* farol summary strip */
+.farol-strip{display:flex;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-light)}
+.farol-strip-item{flex:1;text-align:center}
+.farol-strip-val{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.farol-strip-lbl{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);margin-top:2px}
+
+/* ── Evolução ── */
+.evo-top{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:780px){.evo-top{grid-template-columns:1fr}}
+.evo-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px 20px 16px;box-shadow:var(--sh)}
+.evo-card-title{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--text2);margin-bottom:4px;display:flex;align-items:center;gap:7px}
+.evo-card-title .ti{font-size:15px;color:var(--text3)}
+.evo-card-sub{font-size:11px;color:var(--text3);margin-bottom:16px}
+.evo-canvas-wrap{position:relative;height:240px}
+/* sparkline cards */
+.spark-grid{display:flex;flex-direction:column;gap:14px}
+.spark-card{
+  background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
+  padding:20px 20px 18px;box-shadow:var(--sh);position:relative;overflow:hidden;
+}
+.spark-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  border-radius:var(--radius) var(--radius) 0 0;
+}
+.spark-card.farol-g::before{background:var(--g-bar)}
+.spark-card.farol-y::before{background:var(--y-bar)}
+.spark-card.farol-r::before{background:var(--r-bar)}
+/* header: nome + valor + tendência em linha */
+.spark-header{display:flex;align-items:flex-end;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.spark-name{font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:6px;flex-shrink:0}
+.spark-name .ti{font-size:14px}
+.spark-val{font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1;flex-shrink:0}
+.spark-card.farol-g .spark-val{color:var(--g-text)}
+.spark-card.farol-y .spark-val{color:var(--y-text)}
+.spark-card.farol-r .spark-val{color:var(--r-text)}
+.spark-trend{font-size:11px;color:var(--text3);margin-bottom:3px;display:flex;align-items:center;gap:4px}
+.spark-trend .up{color:var(--g-bar)}.spark-trend .down{color:var(--r-bar)}.spark-trend .flat{color:var(--y-bar)}
+.spark-canvas-wrap{height:200px;position:relative}
+.spark-card.onb{border-width:2px}
+.spark-card.onb.farol-g{border-color:var(--g-bar)}
+.spark-card.onb.farol-y{border-color:var(--y-bar)}
+.spark-card.onb.farol-r{border-color:var(--r-bar)}
+.onb-spark-tag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#F8EEB4;color:#7A5800;padding:1px 7px;border-radius:99px;margin-right:8px}
+
+/* ── Aba Dores ── */
+.dores-top{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:800px){.dores-top{grid-template-columns:1fr}}
+.dores-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px 20px 18px;box-shadow:var(--sh)}
+.dores-card-title{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--text2);margin-bottom:3px;display:flex;align-items:center;gap:7px}
+.dores-card-title .ti{font-size:15px;color:var(--text3)}
+.dores-card-sub{font-size:11px;color:var(--text3);margin-bottom:16px}
+.dores-canvas-wrap{position:relative;height:280px}
+/* filtros */
+.dores-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.filter-label{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.04em;text-transform:uppercase;margin-right:4px}
+.filter-btn{font-family:var(--font);font-size:11px;font-weight:600;border:1.5px solid var(--border);background:var(--card);border-radius:99px;padding:4px 12px;cursor:pointer;color:var(--text2);transition:all .15s}
+.filter-btn:hover{border-color:var(--text3);color:var(--text)}
+.filter-btn.active{background:var(--text);border-color:var(--text);color:#fff}
+.filter-btn.f-crit.active{background:var(--r-bar);border-color:var(--r-bar);color:#fff}
+.filter-btn.f-med.active{background:var(--y-bar);border-color:var(--y-bar);color:var(--y-text)}
+.filter-btn.f-leve.active{background:var(--g-bar);border-color:var(--g-bar);color:#fff}
+/* tabela dores */
+.dores-table-wrap{overflow-x:auto}
+.dores-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:700px}
+.dores-table th{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);padding:8px 12px;border-bottom:2px solid var(--border);text-align:left;white-space:nowrap;background:var(--card)}
+.dores-table td{padding:9px 12px;border-bottom:1px solid var(--border-light);vertical-align:top;color:var(--text2)}
+.dores-table tr:hover td{background:#FAFAF7}
+.chip-imp{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.chip-crit{background:var(--r-bg);color:var(--r-text);border:1px solid var(--r-bdr)}
+.chip-med{background:var(--y-bg);color:var(--y-text);border:1px solid var(--y-bdr)}
+.chip-leve{background:var(--g-bg);color:var(--g-text);border:1px solid var(--g-bdr)}
+.chip-status{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:#F0EDE6;color:var(--text3);border:1px solid var(--border)}
+.chip-cat{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;background:#EEF2FF;color:#3A50C8}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="top-eyebrow">
+        <span class="ne-badge">NE · CX</span>
+        Resultado mensal
+      </div>
+      <div class="top-title" id="pageTitle">CES — Maio 2026</div>
+      <div class="top-sub" id="pageSub">NE Pesquisa CX · Customer Effort Score · 12 d.u. pós coleta · 30 empresas aptas</div>
+    </div>
+    <div class="month-sel-wrap">
+      <i class="ti ti-calendar"></i>
+      <select id="monthSel"></select>
+    </div>
+  </div>
+
+  <!-- BANNER -->
+  <div class="banner">
+    <i class="ti ti-info-circle"></i>
+    <p>
+      As respostas chegam de duas formas: via
+      <span class="src-pill sp-trable"><i class="ti ti-brand-whatsapp" style="font-size:11px"></i> WhatsApp/Trable</span>
+      (1 pergunta — <strong>Rotina</strong>) +
+      <span class="src-pill sp-form"><i class="ti ti-mail" style="font-size:11px"></i> Link Formulário</span>
+      (4 perguntas complementares), ou via <strong>e-mail</strong>.
+      Empresas que responderam pelas duas fontes são contadas <strong>uma única vez</strong>.
+      Farol: <strong style="color:var(--g-text)">Bom ≥ 4,5</strong> ·
+      <strong style="color:var(--y-text)">Atenção 3,0–4,4</strong> ·
+      <strong style="color:var(--r-text)">Crítico &lt; 3,0</strong>
+    </p>
+  </div>
+
+  <!-- ABAS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('operacional',this)"><i class="ti ti-chart-bar" style="margin-right:5px"></i>Operacional</button>
+    <button class="tab-btn" onclick="switchTab('executiva',this)"><i class="ti ti-presentation-analytics" style="margin-right:5px"></i>Visão Executiva</button>
+  </div>
+
+  <!-- ABA OPERACIONAL -->
+  <div class="tab-pane active" id="tab-operacional">
+
+  <!-- HERO -->
+  <div class="sec-hdr"><span class="sec-hdr-label">Indicadores gerais</span><div class="sec-hdr-line"></div></div>
+  <div class="hero-grid" id="heroGrid"></div>
+
+  <!-- AREAS -->
+  <div class="sec-hdr"><span class="sec-hdr-label">Visão por área de esforço</span><div class="sec-hdr-line"></div></div>
+  <div class="area-grid" id="areaGrid"></div>
+
+  <!-- HEATMAP -->
+  <div class="sec-hdr"><span class="sec-hdr-label" id="hmLabel">Mapa do calor — Maio 2026</span><div class="sec-hdr-line"></div></div>
+  <div class="hm-card">
+    <div class="hm-scroll">
+      <div id="hmContainer"></div>
+    </div>
+  </div>
+
+  <!-- THERMOMETER -->
+  <div class="sec-hdr"><span class="sec-hdr-label">Termômetro do esforço</span><div class="sec-hdr-line"></div></div>
+  <div class="thermo-card">
+    <div id="thermoContainer"></div>
+    <div class="thermo-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--g-bar)"></div>Bom (≥4.5)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--y-bar)"></div>Atenção (3–4.4)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--r-bar)"></div>Crítico (&lt;3)</div>
+    </div>
+  </div>
+
+  <!-- FEEDBACKS -->
+  <div class="sec-hdr"><span class="sec-hdr-label">Feedbacks por farol</span><div class="sec-hdr-line"></div></div>
+  <div class="fb-grid" id="fbGrid"></div>
+
+  <div class="sec-hdr"><span class="sec-hdr-label">Dores & Oportunidades</span><div class="sec-hdr-line"></div></div>
+  <div class="dores-top">
+    <div class="dores-card">
+      <div class="dores-card-title"><i class="ti ti-chart-bar-left"></i>Dores por categoria</div>
+      <div class="dores-card-sub">Total de ocorrências · empilhado por nível de impacto</div>
+      <div class="dores-canvas-wrap"><canvas id="chartCats"></canvas></div>
+    </div>
+    <div class="dores-card">
+      <div class="dores-card-title"><i class="ti ti-list-details"></i>Top subcategorias</div>
+      <div class="dores-card-sub">10 subcategorias mais frequentes · destaque para críticos</div>
+      <div class="dores-canvas-wrap"><canvas id="chartSubs"></canvas></div>
+    </div>
+  </div>
+  <div class="sec-hdr" style="margin-top:4px"><span class="sec-hdr-label">Volume por time responsável</span><div class="sec-hdr-line"></div></div>
+  <div class="dores-card">
+    <div class="dores-card-title"><i class="ti ti-users"></i>Dores por time responsável</div>
+    <div class="dores-card-sub">Distribuição de ocorrências entre os times · empilhado por nível de impacto</div>
+    <div style="position:relative;height:220px"><canvas id="chartResp"></canvas></div>
+  </div>
+
+  </div><!-- /tab-operacional -->
+
+  <!-- ABA EXECUTIVA -->
+  <div class="tab-pane" id="tab-executiva">
+
+    <div class="sec-hdr"><span class="sec-hdr-label">Evolução CES Geral</span><div class="sec-hdr-line"></div></div>
+    <div class="exec-card" style="margin-bottom:14px">
+      <div class="exec-card-title"><i class="ti ti-trending-up"></i>Média CES ao longo dos meses</div>
+      <div class="exec-card-sub">Linha de meta em 4,5 · pontos coloridos pelo farol</div>
+      <div class="exec-canvas-wrap"><canvas id="execChartCES"></canvas></div>
+    </div>
+
+    <div class="sec-hdr"><span class="sec-hdr-label">Visão por dimensão</span><div class="sec-hdr-line"></div></div>
+    <div class="spark-grid" id="execSparkGrid"></div>
+
+
+  </div><!-- /tab-executiva -->
+
+
+
+</div><!-- /shell -->
+
+<!-- ════════════════════════ DADOS ════════════════════════════ -->
+<script>
+/*
+  notas: [Contrato, Integração, 1ªColeta, Painel, Rotina]  — null = não respondido
+  fonte: 'form'   → só formulário (conta nos 8)
+         'ambos'  → formulário + Trable (conta nos 8 do form E nos 10 do Trable, mas 1 empresa)
+         'trable' → só Trable (conta nos 10)
+
+  Maio: 5 form-only + 3 ambos + 7 trable-only = 15 únicos
+        Taxa form   = (5+3)/30  = 8/30  = 26,7%
+        Taxa Trable = (7+3)/30  = 10/30 = 33,3%
+*/
+const dadosMeses = {
+  '2026-05': {
+    label:'Maio 2026',
+    aptos:30,
+    // Fonte: Mapa 2 da planilha — dados reais de maio/2026
+    // ⚠️ 1ª linha do formulário não tem nome — identificar e corrigir abaixo
+    clientes:[
+      // ── 5 × somente formulário ──────────────────────────────────────────
+      { nome:'Semente das Estrelas', tier:'Gold',     fonte:'form',
+        notas:[4,3,4,5,5],
+        comentario:'Estamos felizes com o uso da plataforma e com a logística da Mandae. Temos recebido um retorno positivo dos clientes, que estão recebendo as encomendas mais rápido e com o frete mais em conta em muitos casos.',
+        sentimento:'pos' },
+      { nome:'Cozinha Paula Souza',  tier:'Platinum', fonte:'form',
+        notas:[3,1,5,3,null],
+        comentario:'O retorno para os chamados abertos deveriam ser melhores, falta suporte e os prazos já chegam a 10 dias úteis. 5 após abrir e mais 5 dias após a resposta, é inadequado e ficamos sem dar uma posição para os clientes.',
+        sentimento:'neg' },
+      { nome:'Editora Vida',         tier:'Black',    fonte:'form',
+        notas:[3,3,5,4,4],
+        comentario:null, sentimento:null },
+      { nome:'Habibah / São Jorge',  tier:'Black',    fonte:'form',
+        notas:[4,4,4,4,null],
+        comentario:'Melhorar a efetivação das entregas em si, tecnologia funcionando, a entrega deixa a desejar.',
+        sentimento:'neg' },
+      { nome:'Super Vegan',          tier:'Gold',     fonte:'form',
+        notas:[4,4,4,4,1],
+        comentario:'Estou tendo que migrar para a utilização apenas da Mandae, mas não consigo, pois o melhor envio continua com prazo bem menor e os clientes preferem pagar 1 ou 2 reais a mais e ter prazo muito menor. Já pedi ajuda mas sem sucesso. Vou tentar mais um pouco, mas caso não consiga, provavelmente irei cancelar o contrato.',
+        sentimento:'neg' },
+      // ── 3 × ambos os canais (formulário + Trable) — contados 1x ─────────
+      { nome:'Lelê Crochê',          tier:'Gold',     fonte:'ambos',
+        notas:[5,5,5,3,4],
+        comentario:'Os preços estão acessíveis mas o prazo está muito longo. Mesmo que chega antes na maioria das vezes, o que apresenta para a pessoa na hora da compra faz ela tomar a decisão se escolhe a Mandaê ou não, e o prazo faz bastante diferença.',
+        sentimento:'neu' },
+      { nome:'diborella',            tier:'Platinum', fonte:'ambos',
+        notas:[5,4,4,5,5],
+        comentario:'Inicialmente havia uma falha na emissão das etiquetas via ERP, atualizando o status do pedido como enviado imediatamente após a emissão. Felizmente isso foi corrigido! Sistema todo muito funcional. Avaliaria a possibilidade de implementação de scanner durante a coleta para atualização do status de envio mais rápida para os clientes.',
+        sentimento:'pos' },
+      { nome:'Unique Chic',          tier:'Black',    fonte:'ambos',
+        notas:[4,4,4,1,2],
+        comentario:'Na verdade o que é difícil não é a parte operacional e sim a gestão de problemas por parte de vocês. Não temos um retorno quando necessário e se precisarmos juntar documentação é mais difícil ainda.',
+        sentimento:'neg' },
+      // ── 7 × somente Trable ──────────────────────────────────────────────
+      { nome:'Charme Decants',       tier:'Gold',     fonte:'trable',
+        notas:[null,null,null,null,4],
+        comentario:null, sentimento:null },
+      { nome:'MERCAZZO',             tier:'Black',    fonte:'trable',
+        notas:[null,null,null,null,4],
+        comentario:null, sentimento:null },
+      { nome:'Mister Decants',       tier:'Gold',     fonte:'trable',
+        notas:[null,null,null,null,5],
+        comentario:null, sentimento:null },
+      { nome:'Montreal Magazine',    tier:'Platinum', fonte:'trable',
+        notas:[null,null,null,null,3],
+        comentario:null, sentimento:null },
+      { nome:'Oficina dos Carimbos', tier:'Gold',     fonte:'trable',
+        notas:[null,null,null,null,3],
+        comentario:null, sentimento:null },
+      { nome:'Pepita Moda Feminina', tier:'Platinum', fonte:'trable',
+        notas:[null,null,null,null,3],
+        comentario:null, sentimento:null },
+      { nome:'Tecnocubo',            tier:'Platinum', fonte:'trable',
+        notas:[null,null,null,null,4],
+        comentario:null, sentimento:null },
+    ]
+  }
+  ,
+  '2026-02': {
+    label:'Fevereiro 2026',
+    aptos:34,
+    // Fonte: somente formulário e-mail — Trable não existia neste período
+    clientes:[
+      { nome:'Bemgloria',                 tier:'Platinum', fonte:'form', notas:[4,3,4,2,3], comentario:null, sentimento:null },
+      { nome:'Lojas Yogui',               tier:'Black',    fonte:'form', notas:[4,4,3,3,3], comentario:'O atendimento, ter uma pessoa para falar comigo e não cair num chatbot é bom e os prazos de fato cumprem bastante. Para melhorar: bipagem na retirada e mais dados no painel, como distribuição de frete e custo médio por estado.', sentimento:'neu' },
+      { nome:'Alexandre Pavão',           tier:'Platinum', fonte:'form', notas:[4,4,4,4,4], comentario:'Time engajado, super disposto a ajudar quando necessário. Processo muito tranquilo e fácil. Parabéns em especial ao Leo e Renato!', sentimento:'pos' },
+      { nome:'Median / Dap Distribuidora',tier:'Gold',     fonte:'form', notas:[5,3,5,5,5], comentario:'A velocidade de entrega está muito boa. Minha dificuldade tem sido somente em relação à integração, algumas funcionalidades ainda não estão 100% (talvez ocasionado por falha no ERP Magis5 e não na Mandaê).', sentimento:'pos' },
+      { nome:'Tullan Bebidas',            tier:'Platinum', fonte:'form', notas:[4,4,5,5,5], comentario:null, sentimento:null },
+      { nome:'Flavor House',              tier:'Platinum', fonte:'form', notas:[5,5,5,4,5], comentario:'Integração de cálculo de frete direto dentro do ERP Tiny.', sentimento:'neu' },
+      { nome:'Alcance Jeans',             tier:'Platinum', fonte:'form', notas:[5,5,5,5,5], comentario:null, sentimento:null },
+      { nome:'Modarce',                   tier:'Platinum', fonte:'form', notas:[5,5,5,5,5], comentario:'Tudo ótimo.', sentimento:'pos' },
+    ]
+  },
+  '2026-03': {
+    label:'Março 2026',
+    aptos:57,
+    // Fonte: somente formulário e-mail — Trable não existia neste período
+    clientes:[
+      { nome:'susanafujita',              tier:'Gold',     fonte:'form', notas:[4,3,4,null,null], comentario:null, sentimento:null },
+      { nome:'Café Ponta da Serra',       tier:'Gold',     fonte:'form', notas:[4,4,3,null,null], comentario:null, sentimento:null },
+      { nome:'Magnífica SemiJoias',       tier:'Gold',     fonte:'form', notas:[4,4,4,4,4],       comentario:null, sentimento:null },
+      { nome:'Rogers',                    tier:'Platinum', fonte:'form', notas:[4,4,4,4,4],       comentario:null, sentimento:null },
+      { nome:'Outsider',                  tier:'?',        fonte:'form', notas:[5,4,5,3,3],       comentario:null, sentimento:null },
+      { nome:'Cacow Alimentos',           tier:'Platinum', fonte:'form', notas:[4,5,4,3,4],       comentario:null, sentimento:null },
+      { nome:'bumma',                     tier:'Platinum', fonte:'form', notas:[4,3,5,5,4],       comentario:'Suporte pelo WhatsApp excelente, é rápido e ágil. Para melhorar: integrações mais facilitadas com outros tipos de sistema.', sentimento:'pos' },
+      { nome:'Dushi Wear',                tier:'Gold',     fonte:'form', notas:[4,4,5,4,4],       comentario:'Podem melhorar o sistema de etiquetas, gerar direto do site para a plataforma de vocês!', sentimento:'neu' },
+      { nome:'Rede de Compras',           tier:'Platinum', fonte:'form', notas:[4,null,5,3,5],    comentario:'O contrato é absurdamente grande, deveria ter um resumo mais simples dos métodos de cobrança.', sentimento:'neg' },
+      { nome:'Madame Dani',               tier:'Platinum', fonte:'form', notas:[5,5,5,4,4],       comentario:'Venda e integração nota mil. Precisava que coletasse todo dia para ficar só com Mandaê. O motorista às vezes atrasa e isso me deixa preocupada com meus clientes.', sentimento:'neu' },
+      { nome:'LEALPHARMA',                tier:'Platinum', fonte:'form', notas:[5,5,4,4,5],       comentario:'Representantes atenciosos, estamos satisfeitos, resolvem os problemas com assertividade.', sentimento:'pos' },
+      { nome:'minibossa',                 tier:'Gold',     fonte:'form', notas:[5,5,5,5,3],       comentario:'O valor e prazo mais altos estão fazendo com que o cliente opte pelo Correios. O atendimento de vocês é excelente! Como PJ prefiro vocês ao Correio.', sentimento:'neu' },
+      { nome:'Eco Box Embalagens',        tier:'Platinum', fonte:'form', notas:[5,5,4,5,4],       comentario:'Para melhorar ainda mais o que já é bom, precisaríamos de uma frequência maior de coleta em nossa região.', sentimento:'neu' },
+      { nome:'Cindy Beauty',              tier:'Gold',     fonte:'form', notas:[5,5,5,4,5],       comentario:'Acho que está tudo muito bom!', sentimento:'pos' },
+      { nome:'Doce Magia Modas',          tier:'Platinum', fonte:'form', notas:[5,5,5,5,5],       comentario:null, sentimento:null },
+      { nome:'SUH Almeida Store',         tier:'Gold',     fonte:'form', notas:[5,5,5,5,5],       comentario:'Notificação aos clientes é ótimo. O que poderia melhorar: valor do frete para ser mais competitivo com outras transportadoras. 90% dos nossos envios ainda estão sendo enviados por Nuvem Envio.', sentimento:'neu' },
+    ]
+  },
+  '2026-04': {
+    label:'Abril 2026',
+    aptos:79,
+    // Fonte: somente formulário e-mail — Trable não existia neste período
+    clientes:[
+      { nome:'Lilly Sarti',        tier:'Gold',     fonte:'form', notas:[4,4,4,5,4], comentario:null, sentimento:null },
+      { nome:'Use Blessy',         tier:'Black',    fonte:'form', notas:[5,5,5,4,4], comentario:'Atendimento muito bom, como melhoria sinto falta de um painel mais robusto. Faltam informações críticas como dados analíticos sobre custos por frete. Se tivéssemos um dashboard parecido com que o Vini de onboarding tem, sanaria nosso problema.', sentimento:'pos' },
+      { nome:'Richard Moto Capas', tier:'Gold',     fonte:'form', notas:[5,5,5,5,5], comentario:'Está tudo fluindo muito bem.', sentimento:'pos' },
+      { nome:'Kroya Importadora',  tier:'Platinum', fonte:'form', notas:[5,4,5,3,5], comentario:'Até o momento estou bem satisfeito com todo o trabalho, estrutura e as pessoas envolvidas na operação. Expectativa alcançada.', sentimento:'pos' },
+      { nome:'Paris Essências',    tier:'Black',    fonte:'form', notas:[4,4,5,5,4], comentario:'De modo geral, o atendimento e os processos têm funcionado bem, porém identificamos recorrentes reclamações de clientes informando que os entregadores não estão localizando os endereços de entrega, mesmo quando os dados fornecidos estão corretos e completos. Essa situação tem impactado diretamente a experiência do cliente final e gerado retrabalho em nosso atendimento.', sentimento:'neu' },
+      { nome:'Vitalin Sem Glúten', tier:'Gold',     fonte:'form', notas:[4,5,5,5,5], comentario:'Acho que a parte de atendimentos dentro da plataforma poderia ser mais rápido, fora isso eu acho excelente.', sentimento:'pos' },
+      { nome:'Fortier',            tier:'Platinum', fonte:'form', notas:[2,5,5,5,5], comentario:'Somente a parte de contratação mesmo, a comunicação às vezes era demorada, o que levou a meses para que eu finalizasse o processo.', sentimento:'neu' },
+      { nome:'Sonho de Deus',      tier:'Platinum', fonte:'form', notas:[4,4,4,4,4], comentario:'Até o presente momento tudo perfeito.', sentimento:'pos' },
+      { nome:'Ana Mello',          tier:'Platinum', fonte:'form', notas:[5,5,5,5,5], comentario:'Ter opção de incluir feriados nas cotações.', sentimento:'neu' },
+      { nome:'Down Company',       tier:'Gold',     fonte:'form', notas:[4,4,5,4,4], comentario:'Pelo tempo que estamos usando está tudo ok, dentro do esperado. Serviço bom, atendimento ágil.', sentimento:'neu' },
+      { nome:'Jesus Copy',          tier:'Black',    fonte:'form', notas:[5,5,5,5,5], comentario:'Agilidade nas entregas, muitas são entregues até antes do prazo. A visibilidade com o painel nos ajuda muito e a autonomia que ganhamos comparada a outras empresas é excelente. Deixamos de usar os Correios para ficar exclusivos.', sentimento:'pos' },
+    ]
+  }
+  /* Próximos meses:
+  ,'2026-06':{ label:'Junho 2026', aptos:30, clientes:[] }
+  */
+};
+
+/* ─── Constantes ─────────────────────────────────────────── */
+const DIMS    = ['Contrato','Integração','1ª Coleta','Painel','Rotina'];
+const DIMS_EN = ['Hiring & contract','Technical setup','First collection','Dashboard','Routine collections'];
+const TIERS   = ['Black','Platinum','Gold'];
+
+/* ─── Utils ──────────────────────────────────────────────── */
+const avg = arr => { const v=arr.filter(n=>n!=null); return v.length?v.reduce((a,b)=>a+b,0)/v.length:null };
+const fmt = (v,d=2) => v==null?'—':(+v).toFixed(d);
+
+function clientMedia(c){
+  if(c.fonte==='trable') return c.notas[4];
+  return avg(c.notas);
+}
+
+function farol(v){
+  if(v==null) return 'empty';
+  if(v>=4.5)  return 'g';
+  if(v>=3.0)  return 'y';
+  return 'r';
+}
+const farolLabel = f => ({g:'Bom',y:'Atenção',r:'Crítico',empty:'—'}[f]||'—');
+const farolIcon  = f => ({g:'ti-check',y:'ti-minus',r:'ti-alert-triangle',empty:'ti-minus'}[f]);
+
+function hmClass(v){
+  if(v==null) return 'td-empty';
+  return 'hm'+Math.max(1,Math.min(5,Math.round(v)));
+}
+
+function tierChip(t){
+  if(!t||t==='?') return `<span class="tier" style="background:#C8C5BE;color:#fff">—</span>`;
+  return `<span class="tier tier-${t}">${t}</span>`;
+}
+
+/* ─── Selector ───────────────────────────────────────────── */
+const sel  = document.getElementById('monthSel');
+const keys = Object.keys(dadosMeses).sort();
+
+const optAll = document.createElement('option');
+optAll.value='all'; optAll.textContent='Todos os períodos';
+sel.appendChild(optAll);
+
+keys.forEach(k=>{
+  const o=document.createElement('option');
+  o.value=k; o.textContent=dadosMeses[k].label;
+  sel.appendChild(o);
+});
+sel.value = keys[keys.length-1];
+sel.addEventListener('change', render);
+
+/* ─── Aggregate ──────────────────────────────────────────── */
+function getAgg(key){
+  if(key!=='all') return dadosMeses[key];
+  let aptos=0; const map={};
+  keys.forEach(k=>{
+    aptos+=dadosMeses[k].aptos;
+    dadosMeses[k].clientes.forEach(c=>{
+      if(!map[c.nome]||( c.fonte!=='trable'&&map[c.nome].fonte==='trable')) map[c.nome]={...c};
+    });
+  });
+  return {label:'Todos os períodos',aptos,clientes:Object.values(map)};
+}
+
+/* ─── Render ─────────────────────────────────────────────── */
+function render(){
+  const key = sel.value;
+  const d   = getAgg(key);
+
+  document.getElementById('pageTitle').textContent = 'CES — '+(key==='all'?'Todos os períodos':d.label);
+  document.getElementById('pageSub').textContent   = `NE Pesquisa CX · Customer Effort Score · 12 d.u. pós coleta · ${d.aptos} empresas aptas`;
+  document.getElementById('hmLabel').textContent   = `Mapa do calor — ${d.label}`;
+
+  renderHero(d);
+  renderAreas(d);
+  renderHeatmap(d);
+  renderThermo(d);
+  renderFeedbacks(d);
+  // renderDores é chamado uma vez na inicialização (dados estáticos, não mudam com o mês)
+}
+
+/* ── Hero ── */
+function renderHero(d){
+  const nForm      = d.clientes.filter(c=>c.fonte!=='trable').length;
+  const nTrable    = d.clientes.filter(c=>c.fonte!=='form').length;
+  const nTrableOnly= d.clientes.filter(c=>c.fonte==='trable').length;
+  const nAmbos     = d.clientes.filter(c=>c.fonte==='ambos').length;
+  const nTotal     = d.clientes.length;
+
+  const taxaForm   = d.aptos ? nForm/d.aptos*100   : 0;
+  const taxaTrable = d.aptos ? nTrable/d.aptos*100 : 0;
+
+  const medias  = d.clientes.map(c=>clientMedia(c)).filter(m=>m!=null);
+  const mediaCES= medias.length ? avg(medias) : null;
+  const fCES    = farol(mediaCES);
+
+  const fForm   = taxaForm>=30?'g':taxaForm>=20?'y':'r';
+  const fTrable = taxaTrable>=30?'g':taxaTrable>=20?'y':'r';
+
+  const tagForm   = taxaForm>=30?'Meta atingida ✓':taxaForm>=20?'Abaixo de 30%':'Crítico — abaixo de 20%';
+  const tagTrable = taxaTrable>=30?'Meta atingida ✓':taxaTrable>=20?'Abaixo de 30%':'Crítico — abaixo de 20%';
+  const tagCES    = {g:'Meta atingida ✓',y:`Meta: 4.5 · Atenção`,r:'Meta: 4.5 · Crítico',empty:'—'}[fCES];
+  const subTot    = `${nForm} formulário · ${nTrableOnly} Trable${nAmbos>0?' · '+nAmbos+' ambos':''}`;
+
+  document.getElementById('heroGrid').innerHTML=`
+    <div class="hcard hc-form farol-${fForm}">
+      <div class="hcard-icon"><i class="ti ti-mail"></i></div>
+      <div class="hcard-val">${taxaForm.toFixed(1).replace('.',',')}%</div>
+      <div class="hcard-label">Taxa Formulário</div>
+      <div class="hcard-sub">${nForm} respostas · ${d.aptos} aptos</div>
+      <div class="hcard-tag ${fForm}"><i class="ti ${fForm==='g'?'ti-check':fForm==='y'?'ti-minus':'ti-alert-triangle'}"></i>${tagForm}</div>
+    </div>
+    <div class="hcard hc-trable farol-${fTrable}">
+      <div class="hcard-icon"><i class="ti ti-brand-whatsapp"></i></div>
+      <div class="hcard-val">${taxaTrable.toFixed(1).replace('.',',')}%</div>
+      <div class="hcard-label">Taxa Trable</div>
+      <div class="hcard-sub">${nTrable} respostas · ${d.aptos} aptos</div>
+      <div class="hcard-tag ${fTrable}"><i class="ti ${fTrable==='g'?'ti-check':fTrable==='y'?'ti-minus':'ti-alert-triangle'}"></i>${tagTrable}</div>
+    </div>
+    <div class="hcard hc-ces farol-${fCES}">
+      <div class="hcard-icon"><i class="ti ti-gauge"></i></div>
+      <div class="hcard-val">${fmt(mediaCES,2).replace('.',',')}</div>
+      <div class="hcard-label">Média CES Geral</div>
+      <div class="hcard-sub">Meta: 4.5 · ${farolLabel(fCES)}</div>
+      <div class="hcard-tag ${fCES}"><i class="ti ${farolIcon(fCES)}"></i>${fCES==='g'?'Escala 4.5 a 5.0':fCES==='y'?'Escala 3.0 a 4.4':'Escala 1.0 a 2.9'}</div>
+    </div>
+    <div class="hcard hc-total">
+      <div class="hcard-icon"><i class="ti ti-building"></i></div>
+      <div class="hcard-val">${nTotal}</div>
+      <div class="hcard-label">Respondentes</div>
+      <div class="hcard-sub">${subTot}</div>
+      <div class="hcard-tag y" style="background:transparent;border-color:transparent;padding-left:0;color:var(--text3)"><i class="ti ti-buildings"></i>${d.aptos} aptos no período</div>
+    </div>
+  `;
+}
+
+/* ── Areas ── */
+function renderAreas(d){
+  const formCl = d.clientes.filter(c=>c.fonte!=='trable');
+  const allRot = d.clientes.map(c=>c.notas[4]).filter(n=>n!=null);
+
+  const dimAvg = DIMS.map((_,i)=>{
+    if(i===4) return allRot.length?avg(allRot):null;
+    const v=formCl.map(c=>c.notas[i]).filter(n=>n!=null);
+    return v.length?avg(v):null;
+  });
+
+  const onbVals=[dimAvg[2],dimAvg[3]].filter(v=>v!=null);
+  const onbAvg = onbVals.length?avg(onbVals):null;
+
+  const areas=[
+    {i:0,name:'Contrato',       icon:'ti-file-text',       note:'Fonte: Formulário'},
+    {i:1,name:'Integração',     icon:'ti-plug',            note:'Fonte: Formulário'},
+    {i:2,name:'1ª Coleta',      icon:'ti-truck',           note:'Fonte: Formulário'},
+    {i:3,name:'Painel',         icon:'ti-layout-dashboard',note:'Fonte: Formulário'},
+    {i:4,name:'Rotina do dia a dia',icon:'ti-refresh',     note:'Fonte: Form. + Trable'},
+    {i:-1,name:'Onboarding',    icon:'ti-rocket',          note:'Média 1ª Coleta + Painel',onb:true,val:onbAvg},
+  ];
+
+  document.getElementById('areaGrid').innerHTML=areas.map(a=>{
+    const v = a.i>=0?dimAvg[a.i]:a.val;
+    const f = farol(v);
+    return `
+      <div class="acard farol-${f}${a.onb?' onb':''}">
+        ${a.onb?'<span class="onb-tag">Composto</span>':''}
+        <div class="acard-top"><i class="ti ${a.icon} acard-icon"></i><span class="acard-name">${a.name}</span></div>
+        <div class="acard-val">${fmt(v,2).replace('.',',')}</div>
+        <span class="farol-badge fb-${f}"><i class="ti ${farolIcon(f)}"></i>${farolLabel(f)}</span>
+        <div class="acard-note">${a.note}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ── Heatmap ── */
+function renderHeatmap(d){
+  // ordena pior → melhor
+  const sorted=[...d.clientes].sort((a,b)=>{
+    const ma=clientMedia(a)??99;
+    const mb=clientMedia(b)??99;
+    return ma-mb;
+  });
+
+  let html=`<table class="hm-tbl">
+    <thead><tr>
+      <th class="th-left"><span class="th-main">Cliente</span></th>
+      <th><span class="th-main">Tier</span></th>
+      ${DIMS.map((d,i)=>`<th><span class="th-main">${d}</span><span class="th-sub">${DIMS_EN[i]}</span></th>`).join('')}
+      <th><span class="th-main">Média</span></th>
+    </tr></thead>
+    <tbody>`;
+
+  sorted.forEach(c=>{
+    const m = clientMedia(c);
+    html+=`<tr>
+      <td class="td-name">${c.nome}</td>
+      <td class="td-tier">${tierChip(c.tier)}</td>
+      ${c.notas.map(n=>n!=null
+        ?`<td class="${hmClass(n)}">${n}</td>`
+        :`<td class="td-empty">—</td>`
+      ).join('')}
+      <td class="${hmClass(m)} td-media">${fmt(m,1).replace('.',',')}</td>
+    </tr>`;
+  });
+
+  html+='</tbody></table>';
+  document.getElementById('hmContainer').innerHTML=html;
+}
+
+/* ── Thermometer (horizontal) ── */
+function renderThermo(d){
+  const present=TIERS.filter(t=>d.clientes.some(c=>c.tier===t));
+  // clientes sem tier ('?') não entram no termômetro
+  let html='<div class="thermo-rows">';
+
+  present.forEach(tier=>{
+    const cl=d.clientes.filter(c=>c.tier===tier&&c.tier!=='?');
+    const tot=cl.length; if(!tot) return;
+
+    const gCl=cl.filter(c=>farol(clientMedia(c))==='g');
+    const yCl=cl.filter(c=>farol(clientMedia(c))==='y');
+    const rCl=cl.filter(c=>farol(clientMedia(c))==='r');
+
+    const g=gCl.length, y=yCl.length, r=rCl.length;
+    const pG=(g/tot*100).toFixed(1);
+    const pY=(y/tot*100).toFixed(1);
+    const pR=(r/tot*100).toFixed(1);
+
+    // build tooltip content per group — name + score
+    const tipLines = names => names.map(c=>{
+      const m=clientMedia(c);
+      return `${c.nome} (${fmt(m,1).replace('.',',')})`;
+    }).join('&#10;');  // newline in tooltip
+
+    const segR = r>0 ? `<div class="thermo-seg-h ts-r" style="width:${pR}%">
+      <span class="seg-count">${r}</span>
+      <div class="seg-tooltip">${tipLines(rCl)}</div>
+    </div>` : '';
+
+    const segY = y>0 ? `<div class="thermo-seg-h ts-y" style="width:${pY}%">
+      <span class="seg-count">${y}</span>
+      <div class="seg-tooltip">${tipLines(yCl)}</div>
+    </div>` : '';
+
+    const segG = g>0 ? `<div class="thermo-seg-h ts-g" style="width:${pG}%">
+      <span class="seg-count">${g}</span>
+      <div class="seg-tooltip">${tipLines(gCl)}</div>
+    </div>` : '';
+
+    html+=`
+      <div class="thermo-row">
+        <div class="thermo-row-label">${tierChip(tier)}</div>
+        <div class="thermo-bar-h">
+          ${segR}${segY}${segG}
+        </div>
+      </div>
+    `;
+  });
+
+  html+='</div>';
+  document.getElementById('thermoContainer').innerHTML=html||'<div class="empty-col"><i class="ti ti-mood-empty"></i>Sem dados</div>';
+}
+
+/* ── Feedbacks ── */
+function renderFeedbacks(d){
+  const withCmt=d.clientes.filter(c=>c.comentario&&c.sentimento);
+  const cols=[
+    {k:'pos',label:'Positivo',icon:'ti-mood-happy'},
+    {k:'neu',label:'Neutro',  icon:'ti-mood-neutral'},
+    {k:'neg',label:'Negativo',icon:'ti-mood-sad'},
+  ];
+
+  document.getElementById('fbGrid').innerHTML=cols.map(col=>{
+    const items=withCmt.filter(c=>c.sentimento===col.k);
+    const cards=items.length ? items.map(c=>{
+      const m=clientMedia(c);
+      const prev=c.comentario.slice(0,80)+(c.comentario.length>80?'…':'');
+      return `
+        <div class="fb-card ${col.k}" onclick="toggleFb(this)">
+          <div class="fb-meta">
+            <span class="fb-name">${c.nome}</span>
+            ${tierChip(c.tier)}
+            <span class="fb-score ${col.k}">★ ${fmt(m,1).replace('.',',')}</span>
+          </div>
+          <div class="fb-preview">${prev}</div>
+          <div class="fb-full">${c.comentario}</div>
+          <div class="fb-toggle"><i class="ti ti-chevron-down"></i> ver completo</div>
+        </div>`;
+    }).join('') : `<div class="empty-col"><i class="ti ti-circle-dashed"></i>Sem feedbacks</div>`;
+
+    return `
+      <div>
+        <div class="fb-col-hdr">
+          <div class="fb-col-title-row ${col.k}">
+            <i class="ti ${col.icon} fb-col-icon ${col.k}"></i>
+            <span class="fb-col-name ${col.k}">${col.label}</span>
+            <span class="fb-col-ct ${col.k}">${items.length}</span>
+          </div>
+        </div>
+        ${cards}
+      </div>`;
+  }).join('');
+}
+
+function toggleFb(el){
+  const full=el.querySelector('.fb-full');
+  const tog=el.querySelector('.fb-toggle');
+  const open=full.classList.toggle('open');
+  tog.innerHTML=open
+    ?'<i class="ti ti-chevron-up"></i> recolher'
+    :'<i class="ti ti-chevron-down"></i> ver completo';
+}
+
+/* ── Troca de abas ── */
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='executiva') renderExecutiva();
+}
+
+/* ── Visão Executiva ── */
+let execDonutChart=null,execCESChart=null,execSparkCharts=[];
+
+function renderExecutiva(){
+  const key=document.getElementById('monthSel').value;
+  const d=getAgg(key);
+  renderExecCES();
+  renderExecSparks();
+
+}
+
+function renderExecCES(){
+  const allKeys=Object.keys(dadosMeses).filter(k=>dadosMeses[k].clientes.length>0).sort();
+  const labels=allKeys.map(k=>dadosMeses[k].label.replace(' 2026',''));
+  const cesData=allKeys.map(k=>{
+    const ms=dadosMeses[k].clientes.map(c=>clientMedia(c)).filter(m=>m!=null);
+    return ms.length?+(ms.reduce((a,b)=>a+b,0)/ms.length).toFixed(2):null;
+  });
+  const el=document.getElementById('execChartCES');
+  if(!el) return;
+  if(execCESChart){execCESChart.destroy();execCESChart=null;}
+  const plugin={id:'fz',beforeDraw(chart){
+    const{ctx,chartArea:{left,right},scales:{y}}=chart;
+    [{from:4.5,to:5,c:'rgba(99,153,34,.08)'},{from:3,to:4.5,c:'rgba(245,188,0,.06)'},{from:1,to:3,c:'rgba(163,45,45,.06)'}]
+    .forEach(z=>{const yT=y.getPixelForValue(Math.min(z.to,5)),yB=y.getPixelForValue(Math.max(z.from,1));ctx.fillStyle=z.c;ctx.fillRect(left,yT,right-left,yB-yT);});
+    ctx.save();ctx.setLineDash([5,4]);ctx.strokeStyle='rgba(99,153,34,.5)';ctx.lineWidth=1.5;
+    const my=y.getPixelForValue(4.5);ctx.beginPath();ctx.moveTo(left,my);ctx.lineTo(right,my);ctx.stroke();ctx.restore();
+  }};
+  execCESChart=new Chart(el.getContext('2d'),{
+    type:'line',
+    data:{labels,datasets:[{data:cesData,borderColor:'#1C1B18',backgroundColor:'rgba(28,27,24,.05)',
+      borderWidth:2.5,pointRadius:6,tension:.35,fill:true,spanGaps:true,
+      pointBackgroundColor:cesData.map(v=>v==null?'#ccc':v>=4.5?'#639922':v>=3?'#F5BC00':'#A32D2D'),
+      pointBorderColor:'#fff',pointBorderWidth:2.5}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1C1B18',
+        titleFont:{family:'DM Sans',size:12,weight:'700'},bodyFont:{family:'DM Sans',size:11},padding:10,cornerRadius:8,
+        callbacks:{label:c=>' CES: '+String(c.parsed.y).replace('.',','),
+          afterLabel:c=>c.parsed.y>=4.5?' 🟢 Bom':c.parsed.y>=3?' 🟡 Atenção':' 🔴 Crítico'}}},
+      scales:{x:{grid:{display:false},ticks:{font:{family:'DM Sans',size:12},color:'#8A8780'}},
+        y:{min:1,max:5,grid:{color:'#EDEBE5'},ticks:{font:{family:'DM Sans',size:12},color:'#8A8780',callback:v=>String(v).replace('.',',')}}}},
+    plugins:[plugin]
+  });
+}
+
+function renderExecSparks(){
+  const allKeys=Object.keys(dadosMeses).filter(k=>dadosMeses[k].clientes.length>0).sort();
+  const labels=allKeys.map(k=>dadosMeses[k].label.replace(' 2026',''));
+  const dimColors=['#2E75C8','#8B44CC','#E07020','#1A9E6A','#CC2E6A'];
+  const dimIcons=['ti-file-text','ti-plug','ti-truck','ti-layout-dashboard','ti-refresh'];
+  const avgArr=arr=>{const v=arr.filter(n=>n!=null);return v.length?+(v.reduce((a,b)=>a+b,0)/v.length).toFixed(2):null;};
+  function dimAvgs(k){
+    const d=dadosMeses[k];const fc=d.clientes.filter(c=>c.fonte!=='trable');
+    const allRot=d.clientes.map(c=>c.notas[4]).filter(n=>n!=null);
+    return DIMS.map((_,i)=>{
+      if(i===4) return allRot.length?avgArr(allRot):null;
+      const v=fc.map(c=>c.notas[i]).filter(n=>n!=null);return v.length?avgArr(v):null;
+    });
+  }
+  const dimsData=DIMS.map((_,i)=>allKeys.map(k=>dimAvgs(k)[i]));
+  execSparkCharts.forEach(c=>c.destroy());execSparkCharts=[];
+  const grid=document.getElementById('execSparkGrid');
+  if(!grid) return;
+  grid.innerHTML='';
+  DIMS.forEach((dim,i)=>{
+    const series=dimsData[i];
+    const last=[...series].reverse().find(v=>v!=null);
+    const prev2=[...series].reverse().slice(1).find(v=>v!=null);
+    const f=farol(last);
+    const delta=last!=null&&prev2!=null?+(last-prev2).toFixed(2):null;
+    const arrow=delta==null?'→':delta>0?'▲':delta<0?'▼':'→';
+    const arrowClass=delta==null?'flat':delta>0?'up':delta<0?'down':'flat';
+    const trendTxt=delta==null?'sem histórico':delta>0?arrow+' '+String(delta).replace('.',',')+' vs mês ant.':delta<0?arrow+' '+String(Math.abs(delta)).replace('.',',')+' vs mês ant.':'Estável';
+    const card=document.createElement('div');
+    card.className='spark-card farol-'+f;
+    card.innerHTML=
+      '<div class="spark-header">'+
+        '<div class="spark-name"><i class="ti '+dimIcons[i]+'"></i>'+dim+'</div>'+
+        '<div class="spark-val">'+(last!=null?String(last).replace('.',','):'—')+'</div>'+
+        '<div class="spark-trend"><span class="'+arrowClass+'">'+arrow+'</span> '+trendTxt+'</div>'+
+      '</div>'+
+      '<div class="spark-canvas-wrap"><canvas id="execspark'+i+'"></canvas></div>';
+    grid.appendChild(card);
+    const cvs=document.getElementById('execspark'+i);
+    if(!cvs) return;
+    const sparkPlugin={id:'spfz'+i,beforeDraw(chart){
+      const{ctx,chartArea:{left,right},scales:{y}}=chart;
+      [{from:4.5,to:5,c:'rgba(99,153,34,.07)'},{from:3,to:4.5,c:'rgba(245,188,0,.05)'},{from:1,to:3,c:'rgba(163,45,45,.05)'}]
+      .forEach(z=>{const yT=y.getPixelForValue(Math.min(z.to,5)),yB=y.getPixelForValue(Math.max(z.from,1));ctx.fillStyle=z.c;ctx.fillRect(left,yT,right-left,yB-yT);});
+      ctx.save();ctx.setLineDash([4,3]);ctx.strokeStyle='rgba(99,153,34,.4)';ctx.lineWidth=1;
+      const my=y.getPixelForValue(4.5);ctx.beginPath();ctx.moveTo(left,my);ctx.lineTo(right,my);ctx.stroke();ctx.restore();
+    }};
+    const ch=new Chart(cvs.getContext('2d'),{type:'line',
+      data:{labels,datasets:[{data:series,borderColor:dimColors[i],backgroundColor:dimColors[i]+'18',
+        borderWidth:1.8,pointRadius:2.5,
+        pointBackgroundColor:series.map(v=>v==null?'transparent':v>=4.5?'#639922':v>=3?'#F5BC00':'#A32D2D'),
+        pointBorderColor:'#fff',pointBorderWidth:1,tension:.4,fill:true,spanGaps:true}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#1C1B18',titleFont:{family:'DM Sans',size:11,weight:'700'},
+          bodyFont:{family:'DM Sans',size:10},padding:8,cornerRadius:7,
+          callbacks:{title:ctx=>labels[ctx[0].dataIndex],
+            label:ctx=>ctx.parsed.y!=null?' '+dim+': '+String(ctx.parsed.y).replace('.',','):'Sem dado'}}},
+        scales:{
+            x:{grid:{display:false},ticks:{font:{family:'DM Sans',size:11},color:'#8A8780'}},
+            y:{min:1,max:5,grid:{color:'#EDEBE5'},ticks:{font:{family:'DM Sans',size:11},color:'#8A8780',callback:v=>String(v).replace('.',',')}
+          }}},
+      plugins:[sparkPlugin]});
+    execSparkCharts.push(ch);
+  });
+
+  // ── Card Onboarding (1ª Coleta + Painel) ÷ 2 ──
+  const onbSeries = allKeys.map(k=>{
+    const avgs = dimAvgs(k);
+    const vals = [avgs[2],avgs[3]].filter(v=>v!=null);
+    return vals.length ? +(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2) : null;
+  });
+  const onbLast  = [...onbSeries].reverse().find(v=>v!=null);
+  const onbPrev  = [...onbSeries].reverse().slice(1).find(v=>v!=null);
+  const onbF     = farol(onbLast);
+  const onbDelta = onbLast!=null&&onbPrev!=null ? +(onbLast-onbPrev).toFixed(2) : null;
+  const onbArrow = onbDelta==null?'→':onbDelta>0?'▲':onbDelta<0?'▼':'→';
+  const onbArrowClass = onbDelta==null?'flat':onbDelta>0?'up':onbDelta<0?'down':'flat';
+  const onbTrend = onbDelta==null?'sem histórico':
+    onbDelta>0?onbArrow+' '+String(onbDelta).replace('.',',')+' vs mês ant.':
+    onbDelta<0?onbArrow+' '+String(Math.abs(onbDelta)).replace('.',',')+' vs mês ant.':'Estável';
+
+  const onbCard = document.createElement('div');
+  onbCard.className = 'spark-card onb farol-'+onbF;
+  onbCard.innerHTML =
+    '<div class="spark-header">'+
+      '<div class="spark-name"><span class="onb-spark-tag">Composto</span><i class="ti ti-rocket"></i>Onboarding</div>'+
+      '<div class="spark-val">'+(onbLast!=null?String(onbLast).replace('.',','):'—')+'</div>'+
+      '<div class="spark-trend"><span class="'+onbArrowClass+'">'+onbArrow+'</span> '+onbTrend+'</div>'+
+    '</div>'+
+    '<div class="spark-canvas-wrap"><canvas id="execsparkOnb"></canvas></div>';
+  grid.appendChild(onbCard);
+
+  const onbCvs = document.getElementById('execsparkOnb');
+  if(onbCvs){
+    const onbPlugin={id:'spfzOnb',beforeDraw(chart){
+      const{ctx,chartArea:{left,right},scales:{y}}=chart;
+      [{from:4.5,to:5,c:'rgba(99,153,34,.07)'},{from:3,to:4.5,c:'rgba(245,188,0,.05)'},{from:1,to:3,c:'rgba(163,45,45,.05)'}]
+      .forEach(z=>{const yT=y.getPixelForValue(Math.min(z.to,5)),yB=y.getPixelForValue(Math.max(z.from,1));ctx.fillStyle=z.c;ctx.fillRect(left,yT,right-left,yB-yT);});
+      ctx.save();ctx.setLineDash([4,3]);ctx.strokeStyle='rgba(99,153,34,.4)';ctx.lineWidth=1;
+      const my=y.getPixelForValue(4.5);ctx.beginPath();ctx.moveTo(left,my);ctx.lineTo(right,my);ctx.stroke();ctx.restore();
+    }};
+    const ch = new Chart(onbCvs.getContext('2d'),{type:'line',
+      data:{labels,datasets:[{data:onbSeries,borderColor:'#8B6914',backgroundColor:'#8B691418',
+        borderWidth:2,pointRadius:4,
+        pointBackgroundColor:onbSeries.map(v=>v==null?'transparent':v>=4.5?'#639922':v>=3?'#F5BC00':'#A32D2D'),
+        pointBorderColor:'#fff',pointBorderWidth:2,tension:.4,fill:true,spanGaps:true}]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},
+          tooltip:{backgroundColor:'#1C1B18',titleFont:{family:'DM Sans',size:11,weight:'700'},
+            bodyFont:{family:'DM Sans',size:10},padding:8,cornerRadius:7,
+            callbacks:{title:ctx=>labels[ctx[0].dataIndex],
+              label:ctx=>ctx.parsed.y!=null?' Onboarding: '+String(ctx.parsed.y).replace('.',','):'Sem dado'}}},
+        scales:{
+          x:{grid:{display:false},ticks:{font:{family:'DM Sans',size:11},color:'#8A8780'}},
+          y:{min:1,max:5,grid:{color:'#EDEBE5'},ticks:{font:{family:'DM Sans',size:11},color:'#8A8780',callback:v=>String(v).replace('.',',')}}}
+      },
+      plugins:[onbPlugin]});
+    execSparkCharts.push(ch);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ABA DORES & OPORTUNIDADES
+   ══════════════════════════════════════════════════════════════ */
+const DORES_DATA = [
+  {data:"20/02/2026",cliente:"Lojas Yogui",tier:"Black",cat:"Produto",sub:"Produto - Dados / Analytics",tipo:"Dor",impacto:"médio",resp:"Produto",comentario:"falta de dados no painel"},
+  {data:"20/02/2026",cliente:"Lojas Yogui",tier:"Black",cat:"Produto",sub:"Produto - Dados / Analytics",tipo:"Sugestão",impacto:"leve",resp:"Produto",comentario:"distribuição de frete por estado"},
+  {data:"24/02/2026",cliente:"FlavorHouse",tier:"Platinum",cat:"Integração / Tecnologia",sub:"Tecnologia - ERP",tipo:"Sugestão",impacto:"leve",resp:"Integração",comentario:"integração de cálculo de frete direto no ERP Tiny"},
+  {data:"20/02/2026",cliente:"Lojas Yogui",tier:"Black",cat:"Operação Logística",sub:"Operação - Falta de bipagem na coleta",tipo:"Dor",impacto:"médio",resp:"",comentario:"bipagem na retirada"},
+  {data:"02/03/2026",cliente:"Rede de Compras",tier:"Platinum",cat:"Onboarding / Início",sub:"Onboarding - Complexidade de contrato",tipo:"Dor",impacto:"médio",resp:"Comercial",comentario:"contrato absurdamente grande"},
+  {data:"20/02/2026",cliente:"Editora do Brasil",tier:"Black",cat:"Atendimento / Suporte",sub:"Atendimento - Tempo de resposta",tipo:"Dor",impacto:"Crítico",resp:"",comentario:"dificuldade em obter comprovantes de entrega"},
+  {data:"24/02/2026",cliente:"Median / Dap",tier:"Gold",cat:"Integração / Tecnologia",sub:"Tecnologia - Falhas técnicas",tipo:"Dor",impacto:"médio",resp:"Integração",comentario:"funcionalidades da integração não estão 100%"},
+  {data:"17/03/2026",cliente:"Bumma",tier:"Platinum",cat:"Integração / Tecnologia",sub:"Tecnologia - ERP",tipo:"Dor",impacto:"médio",resp:"Integração",comentario:"integração poderia ser mais facilitada"},
+  {data:"26/02/2026",cliente:"BemGloria",tier:"Platinum",cat:"Produto",sub:"Produto - Painel / UX",tipo:"Dor",impacto:"médio",resp:"Onboarding",comentario:"baixa facilidade no uso do painel (nota 2)"},
+  {data:"02/03/2026",cliente:"MadameDani",tier:"Platinum",cat:"Operação Logística",sub:"Operação - Coleta (horário/frequência)",tipo:"Dor",impacto:"médio",resp:"",comentario:"ansiedade com horário de coleta"},
+  {data:"24/03/2026",cliente:"susanafujita",tier:"Gold",cat:"Integração / Tecnologia",sub:"Tecnologia - ERP",tipo:"Dor",impacto:"médio",resp:"Integração",comentario:"dificuldade no processo de integração"},
+  {data:"13/03/2026",cliente:"OUTSIDER",tier:"—",cat:"Produto",sub:"Produto - Painel / UX",tipo:"Dor",impacto:"médio",resp:"Onboarding",comentario:"dificuldade no uso do painel"},
+  {data:"20/02/2026",cliente:"Lojas Yogui",tier:"Black",cat:"Preço / Prazo",sub:"Preço - Transparência de custo",tipo:"Dor",impacto:"médio",resp:"Comercial",comentario:"custo médio por frete"},
+  {data:"19/03/2026",cliente:"Dushi Wear",tier:"Gold",cat:"Produto",sub:"Produto - Emissão de etiquetas",tipo:"Sugestão",impacto:"leve",resp:"Produto",comentario:"melhorar sistema de etiquetas"},
+  {data:"05/03/2026",cliente:"Anatomic Gel",tier:"Black",cat:"Preço / Prazo",sub:"Preço - Frete alto",tipo:"Dor",impacto:"médio",resp:"Comercial",comentario:"concorrência até 50% mais barata"},
+  {data:"31/03/2026",cliente:"SUH Almeida",tier:"Gold",cat:"Preço / Prazo",sub:"Preço - Competitividade",tipo:"Dor",impacto:"Crítico",resp:"",comentario:"valor do frete precisa ser mais competitivo"},
+  {data:"24/03/2026",cliente:"minibossa",tier:"Gold",cat:"Preço / Prazo",sub:"Preço - Competitividade",tipo:"Dor",impacto:"Crítico",resp:"",comentario:"cliente opta por Correios por preço/prazo"},
+  {data:"28/03/2026",cliente:"Café Ponta da Serra",tier:"Gold",cat:"Operação Logística",sub:"Operação - Divergências",tipo:"Dor",impacto:"médio",resp:"Integração",comentario:"dificuldade na primeira coleta"},
+  {data:"30/03/2026",cliente:"Eco Box",tier:"Platinum",cat:"Operação Logística",sub:"Operação - Coleta (horário/frequência)",tipo:"Dor",impacto:"Crítico",resp:"",comentario:"baixa frequência de coleta"},
+  {data:"08/04/2026",cliente:"Use Blessy",tier:"Black",cat:"Produto",sub:"Produto - Dados / Analytics",tipo:"Dor",impacto:"médio",resp:"Produto",comentario:"falta de dados mais completos no painel"},
+  {data:"08/04/2026",cliente:"Use Blessy",tier:"Black",cat:"Produto",sub:"Produto - Painel / UX",tipo:"Dor",impacto:"médio",resp:"Produto",comentario:"painel simples, mas limitado em informações"},
+  {data:"09/04/2026",cliente:"Velocitá",tier:"Black",cat:"Produto",sub:"Produto - Romaneio",tipo:"Dor",impacto:"Crítico",resp:"Produto",comentario:"romaneio não armazena encomendas não enviadas"},
+  {data:"27/04/2026",cliente:"Paris Essências",tier:"Black",cat:"Operação Logística",sub:"Operação - Divergências",tipo:"Dor",impacto:"médio",resp:"",comentario:"entregadores não localizam endereços corretos"},
+  {data:"29/04/2026",cliente:"Heatz Oficial",tier:"Black",cat:"Operação Logística",sub:"Operação - Coleta (horário/frequência)",tipo:"Dor",impacto:"Crítico",resp:"",comentario:"falhas nos prazos de entrega"},
+  {data:"29/04/2026",cliente:"Heatz Oficial",tier:"Black",cat:"Produto",sub:"Produto - Rastreamento/Visibilidade",tipo:"Dor",impacto:"Crítico",resp:"Produto",comentario:"falta de atualizações de rastreamento no painel"},
+  {data:"29/04/2026",cliente:"Vitalin",tier:"Gold",cat:"Atendimento / Suporte",sub:"Atendimento - Tempo de resposta",tipo:"Dor",impacto:"leve",resp:"Suporte",comentario:"atendimentos dentro da plataforma poderia ser mais rápido"},
+  {data:"29/04/2026",cliente:"Fortier",tier:"Platinum",cat:"Comunicação / Transparência",sub:"Atendimento - Tempo de resposta",tipo:"Dor",impacto:"leve",resp:"Comercial",comentario:"demora de comunicação na contratação"},
+  {data:"04/05/2026",cliente:"SuperVegan",tier:"Gold",cat:"Preço / Prazo",sub:"Prazo - Demora nas entregas",tipo:"Dor",impacto:"Crítico",resp:"",comentario:"prazo menor do concorrente impede migração total"},
+  {data:"12/05/2026",cliente:"Editora Vida",tier:"Black",cat:"Produto",sub:"Produto - Acesso",tipo:"Dor",impacto:"Crítico",resp:"Produto",comentario:"estrutura de permissões arriscada — acesso irrestrito"},
+  {data:"21/05/2026",cliente:"Meias São Jorge",tier:"Black",cat:"Atendimento / Suporte",sub:"Atendimento - Tempo de resposta",tipo:"Dor",impacto:"médio",resp:"Suporte",comentario:"suporte lento, tickets sem resposta"},
+  {data:"21/05/2026",cliente:"Meias São Jorge",tier:"Black",cat:"Produto",sub:"Produto - Rastreio desatualizado",tipo:"Dor",impacto:"leve",resp:"Produto",comentario:"rastreio desatualizado"},
+  {data:"21/05/2026",cliente:"Meias São Jorge",tier:"Black",cat:"Operação Logística",sub:"Operação - Divergências",tipo:"Dor",impacto:"Crítico",resp:"",comentario:"tentativas de entrega não registradas"},
+  {data:"25/05/2026",cliente:"Unique Chique",tier:"Black",cat:"Atendimento / Suporte",sub:"Atendimento - Tempo de resposta",tipo:"Dor",impacto:"médio",resp:"Suporte",comentario:"suporte lento — SLA de 1 dia insuficiente"},
+  {data:"25/05/2026",cliente:"Unique Chique",tier:"Black",cat:"Operação Logística",sub:"Operação - Comprovante de entrega",tipo:"Dor",impacto:"Crítico",resp:"",comentario:"comprovante de entrega indisponível ou incompleto"},
+  {data:"27/05/2026",cliente:"Futuraim",tier:"Black",cat:"Produto",sub:"Produto - Rastreio desatualizado",tipo:"Dor",impacto:"médio",resp:"Produto",comentario:"rastreio desatualizado — status de extravio não reflete em tempo real"},
+  {data:"27/05/2026",cliente:"Futuraim",tier:"Black",cat:"Atendimento / Suporte",sub:"Atendimento - Tempo de resposta",tipo:"Dor",impacto:"Crítico",resp:"Suporte",comentario:"suporte sem assertividade — sem posicionamento proativo"},
+];
+
+function renderDores(){
+  renderChartCats();
+  renderChartSubs();
+  renderChartResp();
+}
+
+function renderChartCats(){
+  const el = document.getElementById('chartCats');
+  if(!el) return;
+  const existing = Chart.getChart(el); if(existing) existing.destroy();
+
+  const cats = ['Produto','Operação Logística','Atendimento / Suporte','Preço / Prazo','Integração / Tecnologia','Onboarding / Início','Comunicação / Transparência'];
+  const crit  = cats.map(c=>DORES_DATA.filter(d=>d.cat===c&&d.impacto==='Crítico').length);
+  const medio = cats.map(c=>DORES_DATA.filter(d=>d.cat===c&&d.impacto==='médio').length);
+  const leve  = cats.map(c=>DORES_DATA.filter(d=>d.cat===c&&d.impacto==='leve').length);
+  const labels= cats.map(c=>c.replace(' / ','\n').replace(' Logística','\nLogística').replace(' / Tecnologia','\n/ Tecnologia'));
+
+  new Chart(el.getContext('2d'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Crítico',data:crit, backgroundColor:'#A32D2D',borderRadius:3},
+      {label:'Médio',  data:medio,backgroundColor:'#F5BC00',borderRadius:3},
+      {label:'Leve',   data:leve, backgroundColor:'#639922',borderRadius:3},
+    ]},
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{family:'DM Sans',size:11},usePointStyle:true,padding:14}},
+        tooltip:{backgroundColor:'#1C1B18',titleFont:{family:'DM Sans',size:12,weight:'700'},
+          bodyFont:{family:'DM Sans',size:11},padding:10,cornerRadius:8}},
+      scales:{
+        x:{stacked:true,grid:{color:'#EDEBE5'},ticks:{font:{family:'DM Sans',size:11},color:'#8A8780',precision:0}},
+        y:{stacked:true,grid:{display:false},ticks:{font:{family:'DM Sans',size:11},color:'#4A4843'}}
+      }
+    }
+  });
+}
+
+function renderChartSubs(){
+  const el = document.getElementById('chartSubs');
+  if(!el) return;
+  const existing = Chart.getChart(el); if(existing) existing.destroy();
+
+  const subMap = {};
+  DORES_DATA.forEach(d=>{
+    if(!subMap[d.sub]) subMap[d.sub]={crit:0,medio:0,leve:0};
+    if(d.impacto==='Crítico')    subMap[d.sub].crit++;
+    else if(d.impacto==='médio') subMap[d.sub].medio++;
+    else                         subMap[d.sub].leve++;
+  });
+
+  const sorted = Object.entries(subMap)
+    .sort((a,b)=>(b[1].crit+b[1].medio+b[1].leve)-(a[1].crit+a[1].medio+a[1].leve))
+    .slice(0,10);
+
+  const labels = sorted.map(([s])=>s
+    .replace('Atendimento - ','').replace('Produto - ','')
+    .replace('Operação - ','').replace('Preço - ','')
+    .replace('Tecnologia - ','').replace('Onboarding - ','')
+    .replace('Prazo - ',''));
+  const crit  = sorted.map(([,v])=>v.crit);
+  const medio = sorted.map(([,v])=>v.medio);
+  const leve  = sorted.map(([,v])=>v.leve);
+
+  new Chart(el.getContext('2d'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Crítico',data:crit, backgroundColor:'#A32D2D',borderRadius:3},
+      {label:'Médio',  data:medio,backgroundColor:'#F5BC00',borderRadius:3},
+      {label:'Leve',   data:leve, backgroundColor:'#639922',borderRadius:3},
+    ]},
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{family:'DM Sans',size:11},usePointStyle:true,padding:14}},
+        tooltip:{backgroundColor:'#1C1B18',titleFont:{family:'DM Sans',size:12,weight:'700'},
+          bodyFont:{family:'DM Sans',size:11},padding:10,cornerRadius:8,
+          callbacks:{footer:items=>'Total: '+(crit[items[0].dataIndex]+medio[items[0].dataIndex]+leve[items[0].dataIndex])}
+        }},
+      scales:{
+        x:{stacked:true,grid:{color:'#EDEBE5'},ticks:{font:{family:'DM Sans',size:11},color:'#8A8780',precision:0}},
+        y:{stacked:true,grid:{display:false},ticks:{font:{family:'DM Sans',size:11},color:'#4A4843'}}
+      }
+    }
+  });
+}
+
+
+
+function renderChartResp(){
+  const el = document.getElementById('chartResp');
+  if(!el) return;
+  const existing = Chart.getChart(el); if(existing) existing.destroy();
+
+  const respMap = {};
+  DORES_DATA.forEach(d=>{
+    const r = d.resp && d.resp.trim() ? d.resp.trim() : 'Sem responsável';
+    if(!respMap[r]) respMap[r]={crit:0,medio:0,leve:0};
+    if(d.impacto==='Crítico') respMap[r].crit++;
+    else if(d.impacto==='médio') respMap[r].medio++;
+    else respMap[r].leve++;
+  });
+
+  const sorted = Object.entries(respMap).sort((a,b)=>{
+    return (b[1].crit+b[1].medio+b[1].leve)-(a[1].crit+a[1].medio+a[1].leve);
+  });
+
+  const labels = sorted.map(([r])=>r);
+  const crit   = sorted.map(([,v])=>v.crit);
+  const medio  = sorted.map(([,v])=>v.medio);
+  const leve   = sorted.map(([,v])=>v.leve);
+
+  new Chart(el.getContext('2d'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Crítico',data:crit, backgroundColor:'#A32D2D',borderRadius:4},
+      {label:'Médio',  data:medio,backgroundColor:'#F5BC00',borderRadius:4},
+      {label:'Leve',   data:leve, backgroundColor:'#639922',borderRadius:4},
+    ]},
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'bottom',labels:{font:{family:'DM Sans',size:11},usePointStyle:true,padding:14}},
+        tooltip:{backgroundColor:'#1C1B18',titleFont:{family:'DM Sans',size:12,weight:'700'},
+          bodyFont:{family:'DM Sans',size:11},padding:10,cornerRadius:8,
+          callbacks:{footer:items=>'Total: '+(crit[items[0].dataIndex]+medio[items[0].dataIndex]+leve[items[0].dataIndex])}
+        }
+      },
+      scales:{
+        x:{stacked:true,grid:{color:'#EDEBE5'},ticks:{font:{family:'DM Sans',size:11},color:'#8A8780',precision:0}},
+        y:{stacked:true,grid:{display:false},ticks:{font:{family:'DM Sans',size:12},color:'#4A4843'}}
+      }
+    }
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   INICIALIZAÇÃO — aguarda DOM completo
+   ══════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function(){
+  // 1. Renderizar aba operacional (visível por padrão)
+  render();
+
+  // 2. Pré-renderizar gráficos de Dores depois de 1 frame
+  //    para Chart.js conseguir calcular dimensões mesmo com
+  //    os canvas recém inseridos no DOM
+  requestAnimationFrame(function(){
+    renderDores();
+  });
+
+  // 3. Pré-renderizar Visão Executiva num frame seguinte
+  //    (canvas estão em tab oculta — usamos setTimeout para
+  //    dar tempo ao browser de registrar os elementos)
+  setTimeout(function(){
+    renderExecutiva();
+  }, 100);
+});
+</script>
+</body>
+</html>
